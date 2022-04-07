@@ -22,7 +22,7 @@
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <Ion-button routerLink="/views/FolderPage2">Go to page 2</Ion-button>
+      <Ion-button> routerLink="/"</Ion-button>
       </div>
     </ion-content>
   </ion-page>
