@@ -92,7 +92,7 @@ export default defineComponent({
         mdIcon: warningSharp
       }
     ];
-    const labels = ['Family', 'Friend', 'Notes', 'Work', 'Travel', 'Reminders'];
+    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
     
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
