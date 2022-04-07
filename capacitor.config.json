@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "uvlightmobile",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

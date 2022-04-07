@@ -1,0 +1,8 @@
+{
+  "name": "uvlightmobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "id": "f898cfcb"
+}
