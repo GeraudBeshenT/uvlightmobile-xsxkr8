@@ -17,12 +17,18 @@
       </ion-header>
     
       <div id="container">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <Ion-button routerLink="/views/FolderPage2">Go to page 2</Ion-button>
+      <ion-item >
+        <ion-label color="light" position="floating">Email</ion-label>
+        <ion-input clear-input color="light" type="mail" placeholder="Adresse email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="light" position="floating">Mot de passe</ion-label>
+        <ion-input clear-input color="light" type="password" placeholder="Mot de passe"></ion-input>
+      </ion-item>
+
+      <ion-button color="light" shape="round" fill="outline">Connexion</ion-button>
+
       </div>
     </ion-content>
   </ion-page>
@@ -30,12 +36,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 
 export default defineComponent({
   name: 'FolderPage',
   components: {
-    IonButtons,
+    IonButton,
     IonContent,
     IonHeader,
     IonMenuButton,
@@ -47,6 +53,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+ion-content{
+  --background-color: var(--ion-color-danger, #f1453d);
+}
+
 #container {
   text-align: center;
   position: absolute;

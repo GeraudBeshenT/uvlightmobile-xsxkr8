@@ -4,8 +4,8 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Login</ion-list-header>
-            <ion-note></ion-note>
+            <ion-list-header>Login</ion-list-header><br>
+            <ion-note>Connectez vous avec vos identifiant <br>pour voir vos commandes</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -49,13 +49,13 @@ export default defineComponent({
     const selectedIndex = ref(0);
     const appPages = [
       {
-        title: 'Login',
+        title: 'Connection',
         url: '/folder/Inbox',
         iosIcon: mailOutline,
         mdIcon: mailSharp
       }
     ];
-    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+    const labels = [''];
     
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
