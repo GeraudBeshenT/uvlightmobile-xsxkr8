@@ -1,85 +1,94 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="Success"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <div id="container">
-      <ion-item >
-        <ion-label color="light" position="floating">Email</ion-label>
-        <ion-input clear-input color="light" type="mail" placeholder="Adresse email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label color="light" position="floating">Mot de passe</ion-label>
-        <ion-input clear-input color="light" type="password" placeholder="Mot de passe"></ion-input>
-      </ion-item>
-
-      <ion-button color="light" shape="round" fill="outline">Connexion</ion-button>
-
-      </div>
-    </ion-content>
-  </ion-page>
+  <master-layout pageTitle="Login Form">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Connexion</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Identifiant</ion-label>
+          <ion-input v-model="userInfo.nomclient"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Mot de passe</ion-label>
+          <ion-input type="password" v-model="userInfo.mdp"></ion-input>
+        </ion-item>
+        <ion-button expand="full" @click="login()">Se connecter</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </master-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { IonButton, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-
-export default defineComponent({
-  name: 'FolderPage',
+<script>
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonInput,
+} from "@ionic/vue";
+export default {
   components: {
-    IonButton,
-    IonContent,
-    IonHeader,
-    IonMenuButton,
-    IonPage,
-    IonTitle,
-    IonToolbar
-  }
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonItem,
+    IonLabel,
+    IonInput,
+  },data() {
+    return {
+      nomclient: '',
+      mdp: '',
+    };
+  },
+  methods: {
+    log() {
+      axios
+        .get("http://localhost/uvlightapi2/login.php?nomclient=" + this.nomclient + "&mdp=" + this.mdp)
+        .then((response) => {
+          if (response.status == 200) {
+            
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          // this.openToast();
+          console.log(error);
+        });
+    },
+    async openToast() {
+      const toast = await toastController.create({
+        message: "Identifiants incorrectes, veuillez rÃ©essayer.",
+        duration: 5000,
+      });
+      return toast.present();
+    },
+  },
 });
 </script>
 
-<style scoped>
-
-ion-content{
-  --background-color: var(--ion-color-danger, #f1453d);
+<style>
+ion-content {
+  --ion-background-color: linear-gradient(#f5af19, #f12711);
 }
-
-#container {
-  text-align: center;
+ion-item {
+  --ion-background-color: transparent !important;
+}
+.padding {
+  padding: 5%;
+}
+.logo {
+  height: 250px;
+  position: relative;
+}
+.logo ion-icon {
   position: absolute;
-  left: 0;
-  right: 0;
+  font-size: 9em;
   top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
