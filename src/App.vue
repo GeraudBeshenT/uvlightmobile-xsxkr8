@@ -24,7 +24,11 @@ export default defineComponent({
       {
         title: 'Login',
         url: '/login',
-      }
+      },
+      {
+        title: 'Commandes',
+        url: '/commandes',
+      },
     ];
     const labels = [''];
     
@@ -44,4 +48,3 @@ export default defineComponent({
   }
 });
 </script>
-

@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons slot="start">
+        <ion-buttons>
           <ion-menu-button color="Success"></ion-menu-button>
         </ion-buttons>
         <ion-title>Liste de vos commandes</ion-title>

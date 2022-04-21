@@ -38,36 +38,39 @@ export default {
     IonItem,
     IonLabel,
     IonInput,
-  },data() {
-    return {
-      nomclient: '',
-      mdp: '',
-    };
+  },
+  
+  data() {
+    return { nomclient: null, mdp: null };
   },
   methods: {
     log() {
       axios
-        .get("http://localhost/uvlightapi2/login.php?nomclient=" + this.nomclient + "&mdp=" + this.mdp)
+        .get(
+          'http://localhost/api/login?json=nomclient":"' +
+            this.nomclient +
+            '", "mdp":"' +
+            this.mdp +
+            '"}'
+        )
         .then((response) => {
           if (response.status == 200) {
-            
-            console.log(response);
+            window.location.href = "/views/FolderPage2";
           }
         })
         .catch((error) => {
-          // this.openToast();
-          console.log(error);
+          this.openToast();
         });
     },
     async openToast() {
       const toast = await toastController.create({
-        message: "Identifiants incorrectes, veuillez rÃ©essayer.",
+        message: "Mauvais identifiants de connexion, veuillez réessayer.",
         duration: 5000,
       });
       return toast.present();
     },
   },
-});
+};
 </script>
 
 <style>
