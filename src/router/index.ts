@@ -16,16 +16,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/FolderPage.vue')
   },
   {
-    path: '/uvlight/message',
-    component: () => import('@/views/FolderPage3.vue')
-  },
-  {
     path: '/uvlight/',
     component: TabsPage,
     children: [
       {
         path: 'commandes/:id',
         component: () => import('@/views/FolderPage2.vue')
+      },
+      {
+        path: 'detail/:id',
+        component: () => import('@/views/FolderPage3.vue')
       }
     ]
   }

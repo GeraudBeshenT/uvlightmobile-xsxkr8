@@ -58,10 +58,10 @@ export default defineComponent({
         )
         .then((response) => {
           if (response.status == 200) {
-            window.location.href = "/uvlight/commandes/1";
+            window.location.href = "/uvlight/commandes/3";
           }
         })
-        .catch((error) => {
+        .catch(() => {
           this.openToast();
         });
     },
@@ -78,7 +78,7 @@ export default defineComponent({
 
 <style>
 ion-content {
-  --ion-background-color: linear-gradient(#f5af19, #f12711);
+  --ion-background-color: (#000);
 }
 ion-item {
   --ion-background-color: transparent !important;

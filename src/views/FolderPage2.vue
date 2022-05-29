@@ -5,30 +5,34 @@
         <ion-buttons>
           <ion-menu-button color="Success"></ion-menu-button>
         </ion-buttons>
-        <ion-title>Bonjour <!--{{client.nomclient}}--></ion-title>
+        <ion-title
+          >Commandes</ion-title
+        >
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-card>
+      <ion-card v-for="commande in commandes" :key="commande.iddocumentclient">
         <ion-card-header>
-          <ion-card-title>Commande n°124<!-- {{ commande.idcom }}  --></ion-card-title>
-          <ion-card-subtitle>Prix: 125€<!-- {{ commande.prix }} --></ion-card-subtitle>
+          <ion-card-title
+            >Commande n°{{ commande.iddocumentclient }}</ion-card-title
+          >
+          <ion-card-subtitle>Daté du {{ commande.datedocclient }}</ion-card-subtitle
+          >
         </ion-card-header>
         <ion-card-content>
-          <b>Nombres d'articles: </b><!--{{commande.nbarticle}}--><br>
-          <b>Message </b><!--{{commande.message}}--><br>
-          <ion-button href="/uvlight/message" type="submit" color="light" shape="round" fill="outline">Détails</ion-button>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Commande n°135<!-- {{ commande.idcom }}  --></ion-card-title>
-          <ion-card-subtitle>Prix: 152€<!-- {{ commande.prix }} --></ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <b>Nombres d'articles: </b><!--{{commande.nbarticle}}--><br>
-          <ion-button type="submit" color="light" shape="round" fill="outline" href="/uvlight/message">Détails</ion-button>
+          <u>Etat:</u
+          >{{commande.libetat}}<br />
+          <u>Message:</u
+          > {{commande.commentaireclient}}<br />
+          <ion-button
+            :href="'/uvlight/detail/'+commande.iddocumentclient"
+            type="submit"
+            color="light"
+            shape="round"
+            fill="outline"
+            >Détails</ion-button
+          >
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -58,26 +62,23 @@ export default defineComponent({
   },
   data() {
     return {
-      idcom: '1',
-      nomcom: 'null',
-      prix: 'null',
-      idclient: 'null',
-      commentaire: 'null',
+      commandes: null,
     };
   },
+  mounted: function(){
+    this.getDocuments();
+  },
   methods: {
-    log() {
+    getDocuments() {
       axios
-        .get("http://localhost/uvlightapi2/commande.php?idclient=1")
+        .get("http://localhost/uvlightapi2/commande.php?id=" + this.$route.params.id)
         .then((response) => {
           if (response.status == 200) {
-            
-            console.log(response);
+            this.commandes = response.data;
           }
         })
         .catch((error) => {
-          // this.openToast();
-          console.log(error);
+          this.openToast();
         });
     },
     async openToast() {
