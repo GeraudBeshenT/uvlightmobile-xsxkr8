@@ -1,70 +1,89 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
+    <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title class="comfortaa">UVLight Mobile</ion-title>
       </ion-toolbar>
     </ion-header>
-    
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+      <ion-grid class="ion-text-center vertical-align">
+        <form @submit.prevent="log()">
+          <ion-item>
+            <ion-label color="light" position="floating" class="comfortaa">Nom d'utilisateur</ion-label>
+            <ion-input v-model="nomclient" color="light" type="text" placeholder="Nom d'utilisateur" class="comfortaa"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="light" position="floating" class="comfortaa">Mot de passe</ion-label>
+            <ion-input v-model="mdp" color="light" type="password" placeholder="Mot de passe" class="comfortaa">
+            </ion-input>
+          </ion-item>
+
+          <ion-button type="submit" color="light" shape="round" fill="outline" class="comfortaa">Connexion</ion-button>
+        </form>
+      </ion-grid>
+
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { defineComponent } from "vue";
+import axios from "axios";
+import {
+  toastController,
+  IonItem,
+  IonLabel,
+  IonInput,
+} from "@ionic/vue";
 
 export default defineComponent({
-  name: 'FolderPage',
+  name: "FolderPage",
   components: {
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonMenuButton,
-    IonPage,
-    IonTitle,
-    IonToolbar
-  }
+    IonItem,
+    IonLabel,
+    IonInput,
+  },
+  
+  data() {
+    return { nomclient: null, mdp: null };
+  },
+  methods: {
+    log() {
+      axios
+        .get('http://localhost/uvlightapi2/login.php?nomclient='
+        +this.nomclient+
+        '&mdp='
+        +this.mdp
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            window.location.href = "/uvlight/commandes/12";
+          }
+        })
+        .catch(() => {
+          this.openToast();
+        });
+    },
+    async openToast() {
+      const toast = await toastController.create({
+        message: "Identifiants de connexion Incorrectes, veuillez réessayer.",
+        duration: 5000,
+      });
+      return toast.present();
+    },
+  },
 });
 </script>
 
-<style scoped>
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+<style>
+ion-content {
+  --ion-background-color: (#000);
 }
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-item {
+  --ion-background-color: transparent !important;
 }
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.padding {
+  padding: 5%;
 }
 </style>
