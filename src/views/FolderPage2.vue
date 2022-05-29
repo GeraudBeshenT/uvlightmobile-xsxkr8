@@ -5,29 +5,30 @@
         <ion-buttons>
           <ion-menu-button color="Success"></ion-menu-button>
         </ion-buttons>
-        <ion-title>Liste de vos commandes</ion-title>
+        <ion-title>Bonjour <!--{{client.nomclient}}--></ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-card>
         <ion-card-header>
-          <ion-card-title> Commande 
-            <!-- {{ commande.idcom }}  -->
-            pour 
-            <!-- {{ commande.idclient }} -->
-          </ion-card-title>
-          <ion-card-subtitle>
-            Prix
-          </ion-card-subtitle>
+          <ion-card-title>Commande n°124<!-- {{ commande.idcom }}  --></ion-card-title>
+          <ion-card-subtitle>Prix: 125€<!-- {{ commande.prix }} --></ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Commentaire
-          <!-- {{ commande.commentaire }} -->
-          <ion-item>
-            <ion-label color="light">Commentaire</ion-label>
-            <ion-input clear-input color="light" type="commentaire"></ion-input>
-          </ion-item>
+          <b>Nombres d'articles: </b><!--{{commande.nbarticle}}--><br>
+          <b>Message </b><!--{{commande.message}}--><br>
+          <ion-button href="/uvlight/message" type="submit" color="light" shape="round" fill="outline">Détails</ion-button>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Commande n°135<!-- {{ commande.idcom }}  --></ion-card-title>
+          <ion-card-subtitle>Prix: 152€<!-- {{ commande.prix }} --></ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <b>Nombres d'articles: </b><!--{{commande.nbarticle}}--><br>
+          <ion-button type="submit" color="light" shape="round" fill="outline" href="/uvlight/message">Détails</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-content>

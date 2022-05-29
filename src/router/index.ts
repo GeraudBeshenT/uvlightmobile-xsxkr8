@@ -1,18 +1,33 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import TabsPage from '../views/TabsPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '',
-    redirect: '/login'
+    path: '/',
+    redirect: '/uvlight/login',
   },
   {
-    path: '/login',
-    component: () => import ('../views/FolderPage.vue')
+    path: '/uvlight',
+    redirect: '/uvlight/login',
   },
   {
-    path: '/commandes',
-    component: () => import ('../views/FolderPage2.vue')
+    path: '/uvlight/login',
+    component: () => import('@/views/FolderPage.vue')
+  },
+  {
+    path: '/uvlight/message',
+    component: () => import('@/views/FolderPage3.vue')
+  },
+  {
+    path: '/uvlight/',
+    component: TabsPage,
+    children: [
+      {
+        path: 'commandes/:id',
+        component: () => import('@/views/FolderPage2.vue')
+      }
+    ]
   }
 ]
 
