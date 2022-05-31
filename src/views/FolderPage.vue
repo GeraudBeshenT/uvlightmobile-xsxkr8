@@ -51,14 +51,10 @@ export default defineComponent({
   methods: {
     log() {
       axios
-        .get('http://localhost/uvlightapi2/login.php?nomclient='
-        +this.nomclient+
-        '&mdp='
-        +this.mdp
-        )
+        .get('http://localhost/uvlightapi2/login.php?nomclient='+this.nomclient+'&mdp='+this.mdp)
         .then((response) => {
           if (response.status == 200) {
-            window.location.href = "/uvlight/commandes/3";
+            window.location.href = "/uvlight/commandes/12";
           }
         })
         .catch(() => {

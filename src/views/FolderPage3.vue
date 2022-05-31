@@ -2,46 +2,42 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="comfortaa"
-          >Détail de la commande{{ commande.iddocumentclient }}</ion-title
-        >
+        <ion-title class="comfortaa">
+          Détail de la commande n°{{ commande.iddocumentclient }}
+        </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-card>
         <ion-card-header>
-          <ion-card-title
-            >Commande du {{ commande.datedocclient }}</ion-card-title
-          >
-          <ion-card-subtitle
-            >Etat de la commande: {{ commande.libetat }}</ion-card-subtitle
-          >
+          <ion-card-title>
+            Commande du {{ commande.datedocclient }}
+            </ion-card-title>
+          <ion-card-subtitle>
+            Etat de la commande: {{ commande.libetat }}
+            </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Statut: {{ commande.statutclient }} <br />Message:
-          {{ commande.commentaireclient }}
-          <br />
+          Statut: {{ commande.statutclient }}
+          <br>Message: {{ commande.commentaireclient }}
+          <br><br><br>
           <form @submit.prevent="envoyer()">
-            <ion-item>
-              <ion-label color="light" class="comfortaa">Message</ion-label>
-              <ion-textarea
-                v-model="message"
-                color="light"
-                type="text"
-                placeholder="Message"
-              ></ion-textarea>
+            <ion-item><ion-textarea v-model="message" color="light" type="text" placeholder="Message">
+            </ion-textarea>
             </ion-item>
-            <ion-button type="submit" color="light" shape="round" fill="outline"
-              >Envoyer</ion-button
-            >
+            <ion-button expand="block" type="submit" color="light" shape="round" fill="outline">
+              Envoyer
+            </ion-button>
           </form>
-          <ion-button
-            v-on:click="retour"
-            color="light"
-            shape="round"
-            fill="outline"
-            >Retour</ion-button
-          >
+          <ion-button expand="block" :href="'/uvlight/conversation/'+conversation.iddocumentclient" type="submit" color="light" shape="round" fill="outline">
+          Détails
+          </ion-button>
+          <ion-button expand="block" v-on:click="retour" color="light" shape="round" fill="outline">
+          Retour
+          </ion-button>
+          <ion-button expand="block" v-on:click="suppr" color="light" shape="round" fill="outline">
+          Supprimer
+          </ion-button>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -62,7 +58,7 @@ import {
 } from "@ionic/vue";
 
 export default defineComponent({
-  name: "FolderPage",
+  name: "FolderPage3",
   components: {
     IonContent,
     IonHeader,
@@ -73,6 +69,9 @@ export default defineComponent({
   },
   data() {
     return {
+      conversation:{
+        iddocumentclient: null,
+      },
       commande: {
         iddocumentclient: null,
         datedocclient: null,
@@ -86,6 +85,7 @@ export default defineComponent({
   },
   mounted: function () {
     this.getDetail();
+    this.getConversations();
   },
   methods: {
     getDetail() {
@@ -98,7 +98,21 @@ export default defineComponent({
             this.commande = response.data[0];
           }
         })
-        .catch((error) => {
+        .catch(() => {
+          this.openToast("Une erreur s'est produite!");
+        });
+    },
+    getConversations() {
+      axios
+        .get(
+          "http://localhost/uvlightapi2/conversation.php?id=" + this.$route.params.id
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.conversation = response.data[0];
+          }
+        })
+        .catch(() => {
           this.openToast("Une erreur s'est produite!");
         });
     },
@@ -116,8 +130,24 @@ export default defineComponent({
             this.message = null;
           }
         })
-        .catch((error) => {
+        .catch(() => {
           this.openToast("Une erreur s'est produite!");
+        });
+    },
+    suppr() {
+      axios
+        .get(
+          "http://localhost/uvlightapi2/delete.php?id=" +
+            this.commande.iddocumentclient
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.openToast("commande supprimée!");
+            this.$router.go(-1);
+          }
+        })
+        .catch(() => {
+          this.openToast("La commande ne peut être supprimée!");
         });
     },
     async openToast(text: string) {

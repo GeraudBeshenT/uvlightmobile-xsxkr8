@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'detail/:id',
         component: () => import('@/views/FolderPage3.vue')
+      },
+      {
+        path: 'conversation/:id',
+        component: () => import('@/views/FolderPage4.vue')
       }
     ]
   }

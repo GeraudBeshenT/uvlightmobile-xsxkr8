@@ -1,27 +1,13 @@
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons>
-          <ion-menu-button color="Success"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Commandes</ion-title>
-      </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-card v-for="commande in commandes" :key="commande.iddocumentclient">
+      <ion-card v-for="conversation in conversations" :key="conversation.iddocumentclient">
         <ion-card-header>
-          <ion-card-title>Commande n°{{ commande.iddocumentclient }} du client {{ commande.nomclient }}</ion-card-title>
-          <ion-card-subtitle>Daté du {{ commande.datedocclient }}</ion-card-subtitle>
+          <ion-card-title>{{ conversation.typemessage }}<br>{{ conversation.libmessage }}<br>{{ conversation.datemessage }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          <u>Etat:</u> {{commande.libetat}}<br />
-          <u>Message:</u> {{commande.commentaireclient}}<br />
-          <ion-button :href="'/uvlight/detail/'+commande.iddocumentclient" type="submit" color="light" shape="round" fill="outline">
-          Détails
-          </ion-button>
-        </ion-card-content>
       </ion-card>
     </ion-content>
   </ion-page>
@@ -34,35 +20,31 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   toastController,
 } from "@ionic/vue";
 
 export default defineComponent({
-  name: "FolderPage2",
+  name: "FolderPage4",
   components: {
     IonContent,
     IonHeader,
     IonPage,
-    IonTitle,
-    IonToolbar,
   },
   data() {
     return {
-      commandes: null
+      conversations: null,
     };
   },
   mounted: function(){
-    this.getDocuments();
+    this.getMessages();
   },
   methods: {
-    getDocuments() {
+    getMessages() {
       axios
-        .get("http://localhost/uvlightapi2/commande.php?id=" + this.$route.params.id)
+        .get("http://localhost/uvlightapi2/conversation.php?id=" + this.$route.params.id)
         .then((response) => {
           if (response.status == 200) {
-            this.commandes = response.data;
+            this.conversations = response.data;
           }
         })
         .catch(() => {
@@ -82,7 +64,10 @@ export default defineComponent({
 
 <style scoped>
 ion-content {
-  --background-color: var(--ion-color-danger, #f1453d);
+  --background-color: var(--ion-color-danger, #fff);
+}
+ion-card-title {
+  --color: #000;
 }
 /* .bubble {
   z-index: -1;
@@ -115,7 +100,7 @@ ion-content {
 #container p {
   font-size: 16px;
   line-height: 22px;
-  color: #8c8c8c;
+  color: #000000;
   margin: 0;
 }
 
