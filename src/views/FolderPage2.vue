@@ -14,6 +14,11 @@
         <ion-card-header>
           <ion-card-title>Commande n°{{ commande.iddocumentclient }} du client {{ commande.nomclient }}</ion-card-title>
           <ion-card-subtitle>Daté du {{ commande.datedocclient }}</ion-card-subtitle>
+          <ion-card-title
+            >Commande n°{{ commande.iddocumentclient }} du client {{ commande.nomclient }}</ion-card-title
+          >
+          <ion-card-subtitle>Daté du {{ commande.datedocclient }}</ion-card-subtitle
+          >
         </ion-card-header>
         <ion-card-content>
           <u>Etat:</u> {{commande.libetat}}<br />
